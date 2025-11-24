@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Administrador - CliniPet</title>
+  <link rel="stylesheet" href="../../estilos/estilosAdmin.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="icon" href="../../imagenes/logo.png" type="image/x-icon"/>
+</head>
+<body>
+  <div class="admin-container">
+    <aside class="sidebar" id="sidebar">
+      <div class="logo-section">
+        <img src="../../imagenes/logoSinFondo.png" alt="CliniPet Logo" class="logo">
+        <h2>CliniPet</h2>
+        <p class="rol">Administrador</p>
+      </div>
+
+      <nav class="menu">
+        <a href="#" id="btnInicio"><i class="fas fa-home"></i> Inicio</a>
+        <a href="#" id="btnEmpleadosMenu"><i class="fas fa-briefcase"></i> Empleados</a>
+        <ul class="submenu" id="subEmpleados">
+          <li><a href="#" data-rol="veterinario"><i class="fas fa-user-md"></i> Veterinarios</a></li>
+          <li><a href="#" data-rol="recepcionista"><i class="fas fa-user-clock"></i> Recepcionistas</a></li>
+          <li><a href="#" data-rol="farmaceutico"><i class="fas fa-pills"></i> Farmacéuticos</a></li>
+        </ul>
+        <a href="#" id="btnUsuarios"><i class="fas fa-users"></i> Usuarios</a>
+        <a href="#" id="btnServicios"><i class="fas fa-list-alt"></i> Servicios</a>
+      </nav>
+
+      <button id="logoutBtn" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-box">
+          <button class="toggle-menu" id="toggleMenu"><i class="fas fa-bars"></i></button>
+          <h1 id="tituloSeccion">Panel de Administración</h1>
+          <p class="subtitulo">Bienvenido al centro de control de CliniPet</p>
+        </div>
+        <hr class="divider">
+      </header>
+
+      <section id="contenido">
+        <div id="inicio" class="section active">
+          <div class="dashboard-cards">
+            <div class="card">
+              <h3>Total Usuarios</h3>
+              <p id="totalUsuarios">0</p>
+            </div>
+            <div class="card">
+              <h3>Total Empleados</h3>
+              <p id="totalEmpleados">0</p>
+            </div>
+            <div class="card">
+              <h3>Servicios Registrados</h3>
+              <p id="totalServicios">0</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="empleadosLista" class="section">
+          <div class="empleados-header">
+            <h2 id="tituloEmpleados">Lista de Empleados</h2>
+            <button id="btnAgregarEmpleadoMenuLista"><i class="fas fa-plus"></i> Agregar Empleado</button>
+          </div>
+          <div class="table-responsive">
+            <table id="tablaEmpleados">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Correo</th>
+                  <th>Rol</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="empleadosFormulario" class="section">
+            <div class="empleados-header">
+                <h2 id="tituloFormEmpleado"></h2>
+                <button id="btnVolverListaEmpleados"><i class="fas fa-arrow-left"></i> Volver a Lista</button>
+            </div>
+            <div class="form-card">
+                <form id="formEmpleado">
+                  <input type="hidden" id="empId">
+                  <div class="form-grid">
+                      <div class="columna-izquierda">
+                          <div class="form-group"><label><i class="fas fa-user"></i> Apellido Paterno</label><input type="text" id="apellidoPaterno" required placeholder="Ej. Pardo"></div>
+                          <div class="form-group"><label><i class="fas fa-user"></i> Apellido Materno</label><input type="text" id="apellidoMaterno" required placeholder="Ej. Gómez"></div>
+                          <div class="form-group"><label><i class="fas fa-user"></i> Nombre</label><input type="text" id="nombre" required placeholder="Ej. Manuel"></div>
+                          <div class="form-group"><label><i class="fas fa-phone"></i> Teléfono</label><input type="text" id="telefono" required placeholder="Ej. 5511223344"></div>
+                      </div>
+
+                      <div class="columna-derecha">
+                          <div class="form-group"><label><i class="fas fa-map-marker-alt"></i> Dirección</label><input type="text" id="direccion" required placeholder="Ej. Loma 8, Ciudad de México"></div>
+                          <div class="form-group"><label><i class="fas fa-envelope"></i> Correo Electrónico</label><input type="email" id="correoEmpleado" required placeholder="correo@gmail.com"></div>
+                          <div id="campoExtra" class="form-group"></div>
+                      </div>
+                  </div>
+                  <div class="form-buttons-full">
+                    <button type="submit" id="btnGuardar">Guardar</button>
+                    <button type="button" id="btnCancelar">Cancelar</button>
+                  </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="usuarios" class="section">
+          <div class="empleados-header">
+            <h2>Lista de Usuarios Registrados</h2>
+            <button id="btnAgregarUsuario"><i class="fas fa-plus"></i> Crear Usuario Acceso</button>
+          </div>
+          <div class="table-responsive">
+            <table id="usuariosTable">
+              <thead>
+                <tr>
+                  <th>ID Empleado (Key)</th>
+                  <th>Nombre Empleado</th>
+                  <th>Correo</th>
+                  <th>Rol Asignado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="usuariosFormulario" class="section">
+            <div class="empleados-header">
+                <h2 id="tituloFormUsuario"></h2>
+                <button id="btnVolverListaUsuarios"><i class="fas fa-arrow-left"></i> Volver a Lista</button>
+            </div>
+            <div class="form-card" style="max-width: 500px;">
+                <form id="formUsuario">
+                  <input type="hidden" id="userId">
+                  <div class="form-group">
+                    <label><i class="fas fa-user-tie"></i> Seleccionar Empleado</label>
+                    <select id="empleadoIdSelect" required>
+                        <option value="">-- Seleccione un Empleado --</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Correo (Credencial)</label>
+                    <input type="email" id="correoUsuario" required placeholder="ejemplo@clinipet.com">
+                  </div>
+                  <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Contraseña</label>
+                    <input type="password" id="passwordUsuario" required placeholder="********">
+                  </div>
+                  <div class="form-group">
+                    <label><i class="fas fa-user-tag"></i> Rol para Acceso</label>
+                    <select id="rolUsuario" required>
+                      <option value="veterinario">Veterinario</option>
+                      <option value="recepcionista">Recepcionista</option>
+                      <option value="farmaceutico">Farmacéutico</option>
+                    </select>
+                  </div>
+                  <div class="form-buttons-full">
+                    <button type="submit" id="btnGuardarUsuario">Guardar</button>
+                    <button type="button" id="btnCancelarUsuario">Cancelar</button>
+                  </div>
+                </form>
+            </div>
+        </div>
+        
+        <div id="serviciosLista" class="section">
+          <div class="empleados-header">
+            <h2>Lista de Servicios</h2>
+            <button id="btnAgregarServicio" class="btn-main"><i class="fas fa-plus"></i> Agregar Servicio</button>
+          </div>
+          <div class="table-responsive">
+            <table id="tablaServicios">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre del Servicio</th>
+                  <th>Costo ($)</th>
+                  <th>Duración (min)</th>
+                  <th>Descripción</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="serviciosFormulario" class="section">
+            <div class="empleados-header">
+                <h2 id="tituloFormServicio"></h2>
+                <button id="btnVolverListaServicios" class="btn-volver"><i class="fas fa-arrow-left"></i> Volver a Servicios</button>
+            </div>
+            <div class="form-card">
+                <form id="formServicio">
+                  <input type="hidden" id="servicioId">
+                  <div class="form-group">
+                    <label><i class="fas fa-stethoscope"></i> Nombre del Servicio</label>
+                    <select id="nombreServicioSelect">
+                      <option value="">-- Selecciona un servicio --</option>
+                      <option value="Consulta general">Consulta general</option>
+                      <option value="Baño y estética">Baño y estética</option>
+                      <option value="Vacunación">Vacunación</option>
+                      <option value="Desparasitación">Desparasitación</option>
+                      <option value="Esterilización">Esterilización</option>
+                      <option value="Emergencia">Emergencia</option>
+                      <option value="Hospitalización">Hospitalización</option>
+                      <option value="Cirugía menor">Cirugía menor</option>
+                      <option value="Exámenes de laboratorio">Exámenes de laboratorio</option>
+                      <option value="Radiografías y ecografías">Radiografías y ecografías</option>
+                      <option value="Consulta especializada">Consulta especializada</option>
+                      <option value="Otro">Otro (Especificar)</option>
+                    </select>
+                    <input type="text" id="nombreServicioOtro" placeholder="Especifica el nombre del servicio" style="display:none; margin-top:10px;">
+                  </div>
+                  <div class="form-grid-2">
+                      <div class="form-group">
+                        <label><i class="fas fa-dollar-sign"></i> Costo</label>
+                        <input type="number" id="costoServicio" step="0.01" min="0" required placeholder="Ej. 450.50">
+                      </div>
+                      <div class="form-group">
+                        <label><i class="fas fa-clock"></i> Duración (Minutos)</label>
+                        <input type="number" id="duracionServicio" min="5" required placeholder="Ej. 45">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label><i class="fas fa-info-circle"></i> Descripción</label>
+                    <textarea id="descripcionServicio" rows="4" placeholder="Detalles sobre lo que incluye el servicio."></textarea>
+                  </div>
+                  <div class="form-buttons-full">
+                    <button type="submit" id="btnGuardarServicio" class="btn-main">Guardar Servicio</button>
+                    <button type="button" id="btnCancelarServicio" class="btn-cancel">Cancelar</button>
+                  </div>
+                </form>
+            </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>© 2025 CliniPet | Sistema de Gestión Veterinaria</p>
+      </footer>
+    </main>
+  </div>
+
+  <script type="module" src="../modelo/admin.js"></script>
+</body>
+</html>

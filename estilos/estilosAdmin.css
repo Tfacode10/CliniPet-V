@@ -1,0 +1,478 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  display: flex;
+  background-color: #f4f6f9;
+}
+
+.admin-container {
+  display: flex;
+  width: 100%;
+}
+
+.sidebar {
+  width: 18vw;
+  background: linear-gradient(180deg, #1d3a66 0%, #28528d 100%);
+  color: rgb(255, 255, 255);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  left: 0;
+  transition: left 0.3s;
+  z-index: 10;
+}
+
+.logo-section {
+  text-align: center;
+  padding: 20px;
+}
+.logo {
+  width: 100px;
+}
+.rol {
+  font-size: 0.9rem;
+  color: #5d9af0;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+}
+.menu a {
+  padding: 15px 20px;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: background 0.3s, padding-left 0.3s;
+}
+.menu a:hover, .menu a.active {
+  background-color: #1E73B6;
+  padding-left: 30px;
+}
+.menu i {
+  margin-right: 10px;
+}
+
+.submenu {
+  display: none;
+  flex-direction: column;
+  background-color: #0D1B2E;
+}
+.submenu li a {
+  padding-left: 40px;
+}
+.submenu.show {
+  display: flex;
+}
+
+.logout {
+  background-color: #c00a0aa9;
+  color: white;
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+  width: 90%;
+  margin: 15px auto;
+  border-radius: 10px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: 0.3s;
+}
+.logout:hover {
+  background-color: #d62839;
+  transform: scale(1.05);
+}
+
+.main-content {
+  margin-left: 18vw;
+  padding: 30px;
+  width: 82vw;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  margin-bottom: 15px;
+}
+
+.header-box {
+  background: rgba(42, 121, 157, 0.1);
+  padding: 15px 20px;
+  border-radius: 10px;
+  backdrop-filter: blur(6px);
+  position: relative;
+}
+.header-box h1 {
+  color: #1d3557;
+}
+.header-box .subtitulo {
+  color: #457b9d;
+  margin-top: 5px;
+  font-size: 0.95rem;
+}
+.divider {
+  margin: 15px 0;
+  border: none;
+  border-top: 2px solid #a8bfdc;
+}
+.toggle-menu {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  background: none;
+  border: none;
+  color: #1d3557;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: none;
+}
+
+.section {
+  display: none;
+}
+.section.active {
+  display: block;
+}
+
+.dashboard-cards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.card {
+  flex: 1;
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: 0.3s;
+  min-width: 180px;
+}
+.card:hover {
+  transform: translateY(-4px);
+}
+.card h3 {
+  color: #264653;
+}
+.card p {
+  font-size: 1.5rem;
+  color: #2a7d9d;
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+table th, table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+table th {
+  background-color: #2a6f9d;
+  color: white;
+}
+
+#tablaServicios th {
+    background-color: #1D73B6;
+}
+
+table td button {
+  margin-right: 8px;
+  background-color: #26533a;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+}
+table td button:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+table td button.delete {
+  background-color: #bb1e1e;
+}
+table td button.edit {
+  background-color: #4CAF50;
+}
+
+.empleados-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.empleados-header button {
+  background-color: #5ecc2b;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+.empleados-header button:hover {
+  background-color: #25641d;
+  transform: scale(1.02);
+}
+#btnVolverListaUsuarios, #btnVolverListaEmpleados, .btn-volver {
+    background-color: #3b82f6;
+}
+#btnVolverListaUsuarios:hover, #btnVolverListaEmpleados:hover, .btn-volver:hover {
+    background-color: #1d4ed8;
+}
+.btn-main {
+    background-color: #2a6f9d !important;
+}
+.btn-main:hover {
+    background-color: #1d3557 !important;
+}
+
+.footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 15px;
+  font-size: 0.9rem;
+  color: #457b9d;
+  border-top: 2px solid #a8c5dc;
+}
+
+.form-card {
+  background: #ffffff;
+  padding: 30px 35px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: auto; 
+  max-width: 900px;
+  margin: 20px auto;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+  position: relative;
+}
+.form-group label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #2e2bcc;
+  box-shadow: 0 0 10px rgba(43, 199, 204, 0.4);
+  outline: none;
+}
+.form-group textarea {
+    resize: vertical;
+}
+
+#campoExtra .form-group {
+    margin-top: 0;
+}
+
+.form-buttons-full {
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+    margin-top: 25px;
+    grid-column: 1 / 3;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+#btnGuardar, #btnCancelar,
+#btnGuardarUsuario, #btnCancelarUsuario,
+#btnGuardarServicio, #btnCancelarServicio {
+  padding: 12px 25px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s;
+  font-size: 0.95rem;
+}
+
+#btnGuardar, #btnGuardarUsuario, #btnGuardarServicio {
+  background: linear-gradient(45deg, #5ecc2b, #2a7d1e);
+  color: white;
+}
+#btnGuardar:hover,
+#btnGuardarUsuario:hover,
+#btnGuardarServicio:hover {
+  background: linear-gradient(45deg, #2a7d1e, #5ecc2b);
+  transform: scale(1.05);
+}
+
+#btnCancelar, #btnCancelarUsuario, #btnCancelarServicio {
+  background: linear-gradient(45deg, #e76f51, #c0392b);
+  color: white;
+}
+#btnCancelar:hover,
+#btnCancelarUsuario:hover,
+#btnCancelarServicio:hover {
+  background: linear-gradient(45deg, #c0392b, #e76f51);
+  transform: scale(1.05);
+}
+
+@media (max-width: 992px) {
+  .sidebar {
+    width: 230px;
+    left: -230px;
+  }
+  .sidebar.show {
+    left: 0;
+  }
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+  .toggle-menu {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-cards {
+    flex-direction: column;
+  }
+  table th, table td {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+  .empleados-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .empleados-header button {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .form-grid, .form-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .form-buttons-full {
+      flex-direction: column;
+      margin-top: 15px;
+      grid-column: 1 / 2;
+  }
+  .form-card {
+      padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    width: 80px;
+  }
+  .menu a {
+    font-size: 0.9rem;
+  }
+  .header-box h1 {
+    font-size: 1.2rem;
+  }
+  .header-box .subtitulo {
+    font-size: 0.8rem;
+  }
+}
+
+#btnAgregarUsuario {
+  background-color: #3b82f6;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#btnAgregarUsuario:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.05);
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+    table th, table td {
+        padding: 8px;
+        font-size: 0.85rem;
+        word-break: break-word;
+    }
+    
+    table td button {
+        padding: 6px 8px;
+        font-size: 0.8rem;
+        
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        margin-right: 0;
+        margin-bottom: 5px;
+        white-space: nowrap;
+    }
+}

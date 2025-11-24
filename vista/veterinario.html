@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel Veterinario - CliniPet</title>
+    <link rel="stylesheet" href="../../estilos/estilosVete.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" href="../../imagenes/logo.png" type="image/x-icon"/>
+</head>
+<body>
+    <div class="main-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="logo-section">
+                <img src="../../imagenes/logoSinFondo.png" alt="CliniPet Logo" class="logo">
+                <h2 id="nombreUsuario">Dr/Dra. Veterinario</h2>
+                <p class="rol">Veterinario</p>
+            </div>
+
+            <nav class="menu">
+                <a href="#" id="btnInicio" class="active" data-target="inicio"><i class="fas fa-home"></i> Inicio</a>
+                <a href="#" id="btnCitasProgramadas" data-target="citasProgramadasLista"><i class="fas fa-calendar-check"></i> Citas Programadas</a>
+                <a href="#" id="btnHistorialPaciente" data-target="historialPacienteLista"><i class="fas fa-paw"></i> Historial Paciente</a>
+                <a href="#" id="btnInsumos" data-target="insumosFarmacia"><i class="fas fa-syringe"></i> Insumos y Farmacia</a>
+            </nav>
+            <button id="logoutBtn" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div class="header-box">
+                    <button class="toggle-menu" id="toggleMenu"><i class="fas fa-bars"></i></button>
+                    <h1 id="tituloSeccion">Inicio</h1>
+                    <p class="subtitulo">Gestión de Expedientes y Citas Médicas</p>
+                </div>
+                <hr class="divider">
+            </header>
+            
+            <section id="contenido">
+                
+                <div id="inicio" class="section active">
+                    <div class="banner">
+                        <div class="slides">
+                            <img src="../../imagenes/banner_im1.png">
+                            <img src="../../imagenes/banner_im2.png">
+                            <img src="../../imagenes/banner_im1.png">
+                            <img src="../../imagenes/banner_im2.png">
+                        </div>
+                    </div>
+                
+                    <div class="dashboard-cards">
+                        <div class="card">
+                            <h3>Citas Pendientes Hoy</h3>
+                            <p id="citasDiaVeterinario">0</p>
+                        </div>
+                        <div class="card">
+                            <h3>Pacientes Atendidos</h3>
+                            <p id="pacientesTotales">0</p>
+                        </div>
+                        <div class="card">
+                            <h3>Expedientes Guardados</h3>
+                            <p id="expedientesGuardados">0</p>
+                        </div>
+                        <div class="card">
+                            <h3>Citas Próx. Semana</h3>
+                            <p id="citasProximaSemanaVeterinario">0</p>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                
+                <div id="citasProgramadasLista" class="section">
+                    <div class="list-header">
+                        <p class="subtitulo">Aquí se muestran las citas asignadas a ti.</p>
+                    </div>
+                    
+                    <div id="listaCitasHoyPanel">
+                        <h3>Citas Pendientes para Hoy</h3>
+                        <div class="table-responsive">
+                            <table id="tablaCitasVeterinarioHoy">
+                                <thead>
+                                    <tr>
+                                        <th>Hora</th>
+                                        <th>Cliente</th>
+                                        <th>Mascota</th>
+                                        <th>Servicio</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p id="noCitasDiaVeterinario" style="text-align:center; margin-top: 15px; display:none;">¡Felicidades! No tienes citas pendientes para hoy.</p>
+                    </div>
+                    
+                    <hr class="divider">
+                    
+                    <div id="listaCitasProximasPanel">
+                        <h3>Próximas Citas Programadas</h3>
+                        <div class="table-responsive">
+                            <table id="tablaCitasVeterinarioProximas">
+                                <thead>
+                                    <tr>
+                                        <th>ID Cita</th>
+                                        <th>Fecha</th>
+                                        <th>Hora</th>
+                                        <th>Cliente</th>
+                                        <th>Mascota</th>
+                                        <th>Servicio</th>
+                                        <th>Costo</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p id="noCitasProximas" style="text-align:center; margin-top: 15px; display:none;">No hay citas futuras asignadas.</p>
+                    </div>
+                </div><br>
+
+                <div id="historialPacienteLista" class="section">
+                    <div class="list-header">
+                    </div>
+                    <p class="subtitulo">Se muestran solo los pacientes que has atendido y tienen un expediente creado por ti.</p>
+                    <div class="table-responsive">
+                        <table id="tablaPacientesHistorial">
+                            <thead>
+                                <tr>
+                                    <th>ID Mascota</th>
+                                    <th>Nombre</th>
+                                    <th>Especie / Raza</th>
+                                    <th>Dueño</th>
+                                    <th>Expedientes</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p id="noPacientesAsignados" style="text-align:center; margin-top: 15px; display:none;">Aún no tienes pacientes con expedientes creados.</p>
+                </div>
+
+                <div id="historialFormulario" class="section form-container-section">
+                    <div class="list-header">
+                        <h2 id="tituloFormHistorial">Nuevo Expediente Médico</h2>
+                        <button type="button" id="btnVolverListaHistorial" class="btn-volver" data-target="historialPacienteLista"><i class="fas fa-arrow-left"></i> Volver a Pacientes</button>
+                    </div>
+                    <div class="form-card">
+                        <form id="formHistorial">
+                            <input type="hidden" id="expedienteId"> 
+                            <input type="hidden" id="expedienteCitaId"> 
+                            <input type="hidden" id="expedienteMascotaId">
+
+                            <div class="form-grid-2">
+                                <div class="form-group">
+                                    <label>Paciente:</label>
+                                    <input type="text" id="historialNombreMascota" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label>Fecha de Consulta:</label>
+                                    <input type="date" id="historialFecha" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-stethoscope"></i> Motivo de la Consulta</label>
+                                <textarea id="historialMotivo" rows="2" placeholder="Motivo de la visita (Ej: Vacunación, Fiebre, Cojera)" required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label><i class="fas fa-file-medical-alt"></i> Diagnóstico</label>
+                                <textarea id="historialDiagnostico" rows="3" placeholder="Descripción detallada del diagnóstico médico" required></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-pills"></i> Dispensación de Insumos/Medicamentos</label>
+                                <p class="help-text"></p>
+                                
+                                <div id="contenedorDispensacion" class="table-responsive">
+                                    <table id="tablaDispensacion" class="tabla-dinamica">
+                                        <thead>
+                                            <tr>
+                                                <th>Medicamento / Insumo</th>
+                                                <th>Dosis/Descripción</th>
+                                                <th>Cantidad Disp.</th>
+                                                <th><button type="button" class="btn-add-row" id="btnAddMedicamento"><i class="fas fa-plus"></i></button></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <label>Tratamiento y Notas Adicionales (Recomendaciones):</label>
+                                <textarea id="historialTratamientoNotas" rows="2" placeholder="Instrucciones post-consulta, notas al dueño o seguimiento del caso"></textarea>
+                            </div>
+                            
+                            <div class="form-buttons-full">
+                                <button type="button" class="btn-cancel" id="btnCancelarHistorial"><i class="fas fa-times"></i> Cancelar</button>
+                                <button type="submit" class="btn-main"><i class="fas fa-save"></i> Guardar Expediente y Finalizar Cita</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="vistaExpediente" class="section">
+                    <div class="list-header">
+                        <h2 id="tituloVistaExpediente">Historial Completo de [Mascota]</h2>
+                        <button type="button" id="btnVolverHistorialLista" class="btn-volver" data-target="historialPacienteLista"><i class="fas fa-arrow-left"></i> Volver a Pacientes</button>
+                    </div>
+                    
+                    <div id="expedientesContainer">
+                        <div id="noExpedientes" style="text-align: center; margin-top: 20px; color: #555; display:none;">No hay expedientes registrados para este paciente por el veterinario actual.</div>
+                    </div>
+                </div>
+                
+                <div id="insumosFarmacia" class="section">
+                    <div class="panel-section">
+                        <h3>Solicitud Rápida de Insumos</h3>
+                        <p class="help-text">Utilice esto para solicitar reposición de material faltante en el consultorio (no relacionado con una cita).</p>
+                        <div class="form-card">
+                            <form id="formInsumosRapidos">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                </section>
+
+            <footer class="footer">
+                <p>© 2025 CliniPet | Sistema de Gestión Veterinaria</p>
+            </footer>
+        </main>
+    </div>
+
+    <script type="module" src="../control/veterinarios.js"></script>
+</body>
+</html>

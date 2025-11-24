@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Farmacéutico - CliniPet</title>
+  <link rel="stylesheet" href="../../estilos/estilosVete.css" /> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="icon" href="../../imagenes/logo.png" type="image/x-icon"/>
+</head>
+<body>
+  <div class="main-container">
+    <aside class="sidebar" id="sidebar">
+      <div class="logo-section">
+        <img src="../../imagenes/logoSinFondo.png" alt="CliniPet Logo" class="logo">
+        <h2 id="nombreUsuario">Farmacéutico(a)</h2>
+        <p class="rol">Farmacéutico</p>
+      </div>
+
+      <nav class="menu">
+        <a href="#" id="btnInicio" class="active" data-target="inicio"><i class="fas fa-home"></i> Inicio</a>
+        <a href="#" id="btnDispensaciones" data-target="dispensacionesLista"><i class="fas fa-truck-loading"></i> Solicitudes de Despacho</a>
+        <a href="#" id="btnInventario" data-target="inventarioLista"><i class="fas fa-boxes"></i> Inventario Productos</a>
+      </nav>
+
+      <button id="logoutBtn" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div class="header-box">
+          <button class="toggle-menu" id="toggleMenu"><i class="fas fa-bars"></i></button>
+          <h1 id="tituloSeccion">Inicio</h1>
+          <p class="subtitulo">Gestión de Inventario y Despacho de Insumos</p>
+        </div>
+        <hr class="divider">
+      </header>
+
+      <section id="contenido">
+        
+        <div id="inicio" class="section active">
+          <div class="dashboard-cards">
+            <div class="card">
+                <h3>Solicitudes Pendientes</h3>
+                <p id="dispensacionesPendientes">0</p>
+            </div>
+            <div class="card">
+                <h3>Productos Totales en Inventario</h3>
+                <p id="inventarioTotal">0</p>
+            </div>
+            <div class="card">
+                <h3>Productos en Nivel Crítico</h3>
+                <p id="stockCritico">0</p>
+            </div>
+          </div>
+          <br>
+        </div>
+
+        <div id="dispensacionesLista" class="section">
+          <div class="list-header">
+          </div>
+          <p class="subtitulo">Lista de solicitudes de productos hechas por los veterinarios para despachar.</p>
+          <table id="tablaDispensaciones">
+            <thead>
+              <tr>
+                <th>ID Nota</th>
+                <th>Fecha de Solicitud</th>
+                <th>Veterinario Solicitante</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              </tbody>
+          </table>
+          <p id="noDispensaciones" style="text-align:center; margin-top: 15px; display:none;">No hay solicitudes de dispensación pendientes.</p>
+        </div>
+
+        <div id="inventarioLista" class="section">
+          <div class="list-header">
+            <h2>Gestión de Inventario</h2>
+            <button id="btnNuevoItem" class="btn-main"><i class="fas fa-plus"></i> Nuevo Producto</button>
+          </div>
+          <table id="tablaInventario">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Stock</th>
+                <th>Unidad</th>
+                <th>Precio Venta</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              </tbody>
+          </table>
+        </div>
+
+        <div id="inventarioFormulario" class="section form-container-section">
+          <div class="list-header">
+            <h2 id="tituloInventarioForm">Crear Nuevo Producto de Inventario</h2>
+            <button id="btnVolverInventario" class="btn-volver"><i class="fas fa-arrow-left"></i> Volver a Inventario</button>
+          </div>
+          <div class="form-card">
+            <form id="formInventario">
+              <input type="hidden" id="inventarioItemId">
+              <div class="form-grid-2">
+                
+                <div class="form-group">
+                  <label for="nombreItemSelect">Nombre del Producto:</label>
+                  <select id="nombreItemSelect" required>
+                    <option value="">Seleccione un producto</option>
+                    <option value="Amoxicilina">Amoxicilina (Antibiótico)</option>
+                    <option value="Metronidazol">Metronidazol (Antiparasitario)</option>
+                    <option value="Prednisolona">Prednisolona (Corticoide)</option>
+                    <option value="Carprofeno">Carprofeno (Antiinflamatorio)</option>
+                    <option value="Vacuna Múltiple Canina">Vacuna Múltiple Canina</option>
+                    <option value="Vacuna Triple Felina">Vacuna Triple Felina</option>
+                    <option value="Sutura Absorvible">Sutura Absorvible</option>
+                    <option value="Guantes Estériles">Guantes Estériles</option>
+                    <option value="Otro">Otro, especificar</option>
+                  </select>
+                </div>
+                <div class="form-group" id="nombreItemOtroContainer" style="display:none;">
+                  <label for="nombreItemOtro">Especificar Nombre:</label>
+                  <input type="text" id="nombreItemOtro" placeholder="Nombre completo del producto" />
+                </div>
+                
+                <div class="form-group">
+                  <label for="tipoItem">Tipo:</label>
+                  <select id="tipoItem" required>
+                    <option value="">Seleccione...</option>
+                    <option value="Medicamento">Medicamento</option>
+                    <option value="Vacuna">Vacuna</option>
+                    <option value="Insumo">Insumo</option>
+                    <option value="Otro">Otro</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="stock">Stock Inicial:</label>
+                  <input type="number" id="stock" min="0" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="unidadMedidaSelect">Unidad de Medida:</label>
+                  <select id="unidadMedidaSelect" required>
+                    <option value="">Seleccione unidad...</option>
+                    <option value="Caja">Caja</option>
+                    <option value="Frasco">Frasco</option>
+                    <option value="Blíster">Blíster</option>
+                    <option value="Tableta">Tableta</option>
+                    <option value="Dosis">Dosis</option>
+                    <option value="Unidad">Unidad (ej. jeringa)</option>
+                    <option value="Ml">Mililitro (Ml)</option>
+                    <option value="Gr">Gramo (Gr)</option>
+                    <option value="Otro">Otro, especificar</option>
+                  </select>
+                </div>
+                <div class="form-group" id="unidadMedidaOtroContainer" style="display:none;">
+                  <label for="unidadMedidaOtro">Especificar Unidad:</label>
+                  <input type="text" id="unidadMedidaOtro" placeholder="Ej: Rollo, Par, Paquete" />
+                </div>
+                
+                <div class="form-group">
+                  <label for="precioVenta">Precio de Venta:</label>
+                  <input type="number" id="precioVenta" step="0.01" min="0" required>
+                </div>
+                <div class="form-group">
+                  <label for="stockMinimo">Stock Mínimo (Alerta):</label>
+                  <input type="number" id="stockMinimo" min="0" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="descripcionItem">Descripción / Notas:</label>
+                <textarea id="descripcionItem" rows="2"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="itemActivo">Producto Activo:</label>
+                <input type="checkbox" id="itemActivo" checked>
+              </div>
+
+              <div class="form-buttons-full">
+                <button type="button" class="btn-cancel" id="btnCancelarItem"><i class="fas fa-times"></i> Cancelar</button>
+                <button type="submit" class="btn-main"><i class="fas fa-save"></i> Guardar Producto</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        
+        <div id="vistaDispensacion" class="section form-container-section">
+            <div class="list-header">
+                <h2 id="tituloVistaDispensacion">Detalle de Solicitud de Despacho</h2>
+                <button id="btnVolverDispensaciones" class="btn-volver"><i class="fas fa-arrow-left"></i> Volver a Solicitudes</button>
+            </div>
+            
+            <div class="form-card">
+                <h3>Detalles de la Solicitud</h3>
+                <p><strong>ID Nota:</strong> <span id="dispensacionIdDetalle"></span></p>
+                <p><strong>Fecha:</strong> <span id="dispensacionFechaDetalle"></span></p>
+                <p><strong>Veterinario:</strong> <span id="dispensacionVeterinarioDetalle"></span></p>
+                <p><strong>Paciente:</strong> <span id="dispensacionPacienteDetalle"></span></p>
+                
+                <hr class="divider">
+                
+                <h3>Productos Solicitados</h3>
+                <form id="formDespacho">
+                    <table id="tablaDetalleDispensacion" class="tabla-dinamica">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Solicitado</th>
+                                <th>Stock Actual</th>
+                                <th>Cantidad a Despachar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            </tbody>
+                    </table>
+                    
+                    <div class="form-buttons-full">
+                        <button type="button" class="btn-cancel" id="btnRechazarDispensacion"><i class="fas fa-ban"></i> Rechazar Solicitud</button>
+                        <button type="submit" class="btn-main" id="btnConfirmarDespacho"><i class="fas fa-check-circle"></i> Confirmar Despacho y Descontar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+      </section>
+                  <footer class="footer">
+                <p>© 2025 CliniPet | Sistema de Gestión Veterinaria</p>
+            </footer>
+    </main>
+  </div>
+  <script type="module" src="../control/farmaceutico.js"></script>
+</body>
+</html>

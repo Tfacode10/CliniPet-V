@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Panel Recepcionista - CliniPet</title>
+        <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../estilos/estilosRecep.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <link rel="icon" href="../../imagenes/logo.png" type="image/x-icon"/>
+    </head>
+    <body>
+        <div class="main-container">
+            <aside class="sidebar" id="sidebar">
+                <div class="logo-section">
+                    <img src="../../imagenes/logoSinFondo.png" alt="CliniPet Logo" class="logo">
+                    <h2>CliniPet</h2>
+                    <p class="rol">Recepcionista</p>
+                </div>
+                <nav class="menu">
+                    <a href="#" id="btnInicio" class="active"><i class="fas fa-home"></i> Inicio</a>
+                    <a href="#" id="btnCitas"><i class="fas fa-calendar-check"></i> Citas</a>
+                    <a href="#" id="btnPagos"><i class="fas fa-money-bill-wave"></i> Pagos</a>
+                    <a href="#" id="btnClientes"><i class="fas fa-user"></i> Clientes</a>
+                    <a href="#" id="btnMascotas"><i class="fas fa-paw"></i> Mascotas</a>
+                </nav>
+                <button id="logoutBtn" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
+            </aside>
+            <main class="main-content">
+                <header class="header">
+                    <div class="header-box">
+                        <button class="toggle-menu" id="toggleMenu"><i class="fas fa-bars"></i></button>
+                        <h1 id="tituloSeccion">Panel de Recepcionista</h1>
+                        <p class="subtitulo">Gestión diaria de CliniPet</p>
+                    </div>
+                    <hr class="divider">
+                </header>
+                <section id="contenido">
+                    <div id="inicio" class="section active">
+                        <div class="banner">
+                            <div class="slides">
+                                <img src="../../imagenes/banner_im1.png">
+                                <img src="../../imagenes/banner_im2.png">
+                                <img src="../../imagenes/banner_im1.png">
+                                <img src="../../imagenes/banner_im2.png">
+                            </div>
+                        </div>
+                        <div class="dashboard-cards">
+                            <div class="card">
+                                <h3>Citas Pendientes Hoy</h3>
+                                <p id="citasDia">0</p>
+                            </div>
+                            <div class="card">
+                                <h3>Clientes Registrados</h3>
+                                <p id="totalClientes">0</p>
+                            </div>
+                            <div class="card">
+                                <h3>Mascotas Registradas</h3>
+                                <p id="totalMascotas">0</p>
+                            </div>
+                            <div class="card">
+                                <h3>Citas Próxima Semana</h3>
+                                <p id="citasProximaSemana">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div id="citasLista" class="section">
+                        <div class="list-header">
+                            <h2>Agenda de Citas</h2>
+                            <div>
+                                <button id="btnAgregarCita" class="btn-main"><i class="fas fa-plus"></i> Agendar Cita</button> <br>
+                                <button id="btnCalendarioCitas" class="btn-secondary" style="margin-left:10px;"><i class="fas fa-calendar-alt"></i> CALENDARIO DE CITAS</button>
+                                <br>
+                                <button id="btnVerHistorialCitas" class="btn-secondary" style="margin-left: 10px; margin-top: 10px;"><i class="fas fa-history"></i> Historial de Citas</button>
+                            </div>
+                        </div>
+                        <div id="calendarioContainer" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center;">
+                            <div style="width:95%; max-width:1100px; background:#fff; border-radius:8px; padding:16px; box-shadow:0 8px 24px rgba(0,0,0,0.4); position:relative;">
+                                <button id="closeCalendarBtn" style="position:absolute; right:12px; top:12px; background:#dc3545; color:#fff; border:none; padding:8px 10px; border-radius:6px; cursor:pointer;">Cerrar</button>
+                                <div id="calendario" style="margin-top:40px;"></div>
+                            </div>
+                        </div>
+                        <div id="listaCitasDia" class="citas-dia-panel" style="margin-top: 30px;">
+                            <h3>Citas Programadas para Hoy</h3>
+                            <div class="table-responsive">
+                                <table id="tablaCitas">
+                                    <thead>
+                                        <tr>
+                                            <th>Hora</th>
+                                            <th>Cliente</th>
+                                            <th>Mascota</th>
+                                            <th>Servicio</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <p id="noCitasDia" style="text-align: center; margin-top: 15px; display: none;">No hay citas agendadas para hoy.</p>
+                        </div>
+                        <div id="listaCitasProgramadas" class="citas-dia-panel" style="margin-top: 30px;">
+                            <h3>Citas Programadas (Próximas)</h3>
+                            <div class="table-responsive">
+                                <table id="tablaCitasProgramadas">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Hora</th>
+                                            <th>Cliente</th>
+                                            <th>Mascota</th>
+                                            <th>Servicio</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <p id="noCitasProgramadas" style="text-align: center; margin-top: 15px; display: none;">No hay citas programadas próximamente.</p>
+                        </div>
+                    </div>
+                    <br>
+                    
+                    <div id="pagosLista" class="section">
+                        <div class="list-header">
+                            <h2>Pagos Pendientes</h2>
+                            <button id="btnVerHistorialPagos" class="btn-secondary"><i class="fas fa-history"></i> Historial de Pagos</button>
+                        </div>
+                        <div id="listaCitasPendientesPago" class="citas-dia-panel" style="margin-top: 20px;">
+                            <h3>Citas Completadas Pendientes de Cobro</h3>
+                            <div class="table-responsive">
+                                <table id="tablaPagosPendientes">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Cita</th>
+                                            <th>Fecha/Hora</th>
+                                            <th>Cliente</th>
+                                            <th>Mascota</th>
+                                            <th>Monto Total</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <p id="noPagosPendientes" style="text-align: center; margin-top: 15px; display: none;">No hay citas completadas pendientes de cobro.</p>
+                        </div>
+                    </div>
+
+                    <div id="cobroFormulario" class="section form-container-section">
+                        <div class="list-header">
+                            <h2 id="tituloCobro">Procesar Pago</h2>
+                            <button id="btnVolverPagos" class="btn-volver"><i class="fas fa-arrow-left"></i> Volver a Pagos Pendientes</button>
+                        </div>
+                        <div class="form-card">
+                            <form id="formCobro">
+                                <input type="hidden" id="citaIdCobro">
+                                <div class="resumen-cobro-card">
+                                    <h3>Resumen de la Cita</h3>
+                                    <p><strong>Cita ID:</strong> <span id="resumenCitaId"></span></p>
+                                    <p><strong>Cliente:</strong> <span id="resumenCliente"></span></p>
+                                    <p><strong>Mascota:</strong> <span id="resumenMascota"></span></p>
+                                    <hr>
+                                    <div class="detalle-servicios">
+                                        <h4>Servicios y Productos</h4>
+                                        <ul id="listaServiciosCobro"></ul>
+                                    </div>
+                                    <hr>
+                                    <h3 class="total-final">TOTAL A COBRAR: <span id="montoTotalCobrar" style="color: #007bff; font-weight: bold;">$0.00</span></h3>
+                                </div>
+                                
+                                <div class="form-grid-2" style="margin-top: 20px;">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-money-bill-wave"></i> Método de Pago</label>
+                                        <select id="metodoPago" disabled>
+                                            <option value="Efectivo" selected>Efectivo</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fas fa-dollar-sign"></i> Monto Recibido (Efectivo)</label>
+                                        <input type="number" id="montoRecibido" min="0" required placeholder="Ingresar cantidad recibida" step="0.01">
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fas fa-exchange-alt"></i> Cambio a Devolver</label>
+                                        <p id="cambioDevolver" style="font-size: 1.2em; font-weight: bold; color: #dc3545;">$0.00</p>
+                                    </div>
+                                </div>
+                                <div class="form-buttons-full">
+                                    <button type="submit" id="btnConfirmarCobro" class="btn-main" disabled>Confirmar Cobro y Generar Ticket</button>
+                                    <button type="button" id="btnCancelarCobro" class="btn-cancel">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div id="pagosHistorial" class="section">
+                        <div class="list-header">
+                            <h2>Historial de Pagos Realizados</h2>
+                            <button id="btnVolverPagosHistorial" class="btn-volver"><i class="fas fa-arrow-left"></i> Volver a Pagos</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="tablaHistorialPagos">
+                                <thead>
+                                    <tr>
+                                        <th>Folio</th>
+                                        <th>Fecha/Hora</th>
+                                        <th>Cliente</th>
+                                        <th>Monto Total</th>
+                                        <th>Método</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <p id="noPagosHistorial" style="text-align: center; margin-top: 15px; display: none;">No hay pagos en el historial.</p>
+                    </div>
+
+                    <div id="citasHistorial" class="section">
+                        <div class="list-header">
+                            <h2>Historial de Citas</h2>
+                            <button id="btnVolverListaCitasHistorial" class="btn-volver"><i class="fas fa-arrow-left"></i> Volver a Citas</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="tablaHistorialCitas">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Hora</th>
+                                        <th>Cliente</th>
+                                        <th>Mascota</th>
+                                        <th>Servicio</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <p id="noCitasHistorial" style="text-align: center; margin-top: 15px; display: none;">No hay citas en el historial.</p>
+                    </div>
+                    
+                    <div id="detalleHistorial" class="section form-container-section">
+                        <div class="list-header">
+                            <h2 id="tituloDetalleHistorial">Detalle de Cita Histórica</h2>
+                            <button id="btnVolverHistorial" class="btn-volver"><i class="fas fa-arrow-left"></i> Volver al Historial</button>
+                        </div>
+                        <div class="form-card" id="contenidoDetalleHistorial">
+                            <p><strong>ID de Cita:</strong> <span id="detalleId"></span></p>
+                            <p><strong>Fecha y Hora:</strong> <span id="detalleFechaHora"></span></p>
+                            <p><strong>Cliente:</strong> <span id="detalleCliente"></span></p>
+                            <p><strong>Mascota:</strong> <span id="detalleMascota"></span></p>
+                            <p><strong>Veterinario:</strong> <span id="detalleVeterinario"></span></p>
+                            <p><strong>Servicio:</strong> <span id="detalleServicio"></span></p>
+                            <p><strong>Costo:</strong> <span id="detalleCosto"></span></p>
+                            <p><strong>Estado:</strong> <span id="detalleEstado"></span></p>
+                            <hr>
+                            <h4>Notas y Comentarios</h4>
+                            <p id="detalleNotas">No hay notas registradas para esta cita.</p>
+                        </div>
+                    </div>
+                    
+                    <div id="clientesLista" class="section">
+                        <div class="list-header">
+                            <h2>Lista de Clientes</h2>
+                            <button id="btnAgregarCliente" class="btn-main"><i class="fas fa-user-plus"></i> Agregar Cliente</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="tablaClientes">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre Completo</th>
+                                        <th>Correo</th>
+                                        <th>Teléfono</th>
+                                        <th>Mascotas</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="mascotasLista" class="section">
+                        <div class="list-header">
+                            <h2>Mascotas Registradas</h2>
+                            <button id="btnAgregarMascota" class="btn-main"><i class="fas fa-paw"></i> Registrar Mascota</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="tablaMascotas">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre</th>
+                                        <th>Especie</th>
+                                        <th>Raza</th>
+                                        <th>Dueño (ID)</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="clientesFormulario" class="section form-container-section">
+                        <div class="list-header">
+                            <h2 id="tituloFormCliente"></h2>
+                            <button id="btnVolverListaClientes" class="btn-volver"><i class="fas fa-arrow-left"></i> Volver a Clientes</button>
+                        </div>
+                        <div class="form-card">
+                            <form id="formCliente">
+                                <input type="hidden" id="clienteId">
+                                <div class="form-grid-3">
+                                    <div class="form-group"><label><i class="fas fa-user"></i> Nombre</label><input type="text" id="nombreCliente" required placeholder="Ej. Manuel"></div>
+                                    <div class="form-group"><label><i class="fas fa-user"></i> Apellido Paterno</label><input type="text" id="apellidoPaternoCliente" required placeholder="Ej. Duran"></div>
+                                    <div class="form-group"><label><i class="fas fa-user"></i> Apellido Materno</label><input type="text" id="apellidoMaternoCliente" required placeholder="Ej. Perez"></div>
+                                    <div class="form-group"><label><i class="fas fa-phone"></i> Teléfono</label><input type="text" id="telefonoCliente" required placeholder="Ej. 5511223344"></div>
+                                    <div class="form-group"><label><i class="fas fa-envelope"></i> Correo</label><input type="email" id="correoCliente" required placeholder="correo@gmail.com"></div>
+                                    <div class="form-group"><label><i class="fas fa-map-marker-alt"></i> Dirección</label><input type="text" id="direccionCliente" required placeholder="Ej. Calle 5, Edo.Mexico"></div>
+                                </div>
+                                <div class="form-buttons-full">
+                                    <button type="submit" id="btnGuardarCliente" class="btn-main">Guardar</button>
+                                    <button type="button" id="btnCancelarCliente" class="btn-cancel">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="mascotasFormulario" class="section form-container-section">
+                        <div class="list-header">
+                            <h2 id="tituloFormMascota"></h2>
+                            <button id="btnVolverListaMascotas" class="btn-volver"><i class="fas fa-arrow-left"></i> Volver a Mascotas</button>
+                        </div>
+                        <div class="form-card">
+                            <form id="formMascota">
+                                <input type="hidden" id="mascotaId">
+                                <div class="form-group">
+                                    <label><i class="fas fa-user"></i> Dueño de Mascota</label>
+                                    <select id="duenoMascotaSelect" required>
+                                        <option value="">-- Seleccione un Dueño --</option>
+                                    </select>
+                                </div>
+                                <div class="form-grid-2">
+                                    <div class="form-group"><label><i class="fas fa-paw"></i> Nombre Mascota</label><input type="text" id="nombreMascota" required placeholder="Ej. Bobby"></div>
+                                    <div class="form-group"><label><i class="fas fa-venus-mars"></i> Género</label><select id="generoMascota"><option value="Macho">Macho</option><option value="Hembra">Hembra</option></select></div>
+                                    <div class="form-group">
+                                        <label><i class="fas fa-dna"></i> Especie</label>
+                                        <select id="especieMascotaSelect" required>
+                                            <option value="">-- Seleccionar Especie --</option>
+                                            <option value="Perro">Perro</option>
+                                            <option value="Gato">Gato</option>
+                                            <option value="Ave">Ave</option>
+                                            <option value="Reptil">Reptil</option>
+                                            <option value="Otro">Otro (Especificar)</option>
+                                        </select>
+                                        <input type="text" id="especieMascotaOtro" style="display:none; margin-top: 5px;" placeholder="Especifique la especie">
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fas fa-shield-alt"></i> Raza</label>
+                                        <select id="razaMascotaSelect" required>
+                                            <option value="">-- Seleccionar Raza --</option>
+                                        </select>
+                                        <input type="text" id="razaMascotaOtro" style="display:none; margin-top: 5px;" placeholder="Especifique la raza">
+                                    </div>
+                                    <div class="form-group"><label><i class="fas fa-birthday-cake"></i> Fecha Nacimiento</label><input type="date" id="fechaNacMascota"></div>
+                                    <div class="form-group"><label><i class="fas fa-weight"></i> Peso (kg)</label><input type="number" step="0.1" id="pesoMascota" placeholder="Ej. 15.2"></div>
+                                </div>
+                                <div class="form-buttons-full">
+                                    <button type="submit" id="btnGuardarMascota" class="btn-main">Guardar</button>
+                                    <button type="button" id="btnCancelarMascota" class="btn-cancel">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="citasFormulario" class="section form-container-section">
+                        <div class="list-header">
+                            <h2 id="tituloFormCita">Agendar Nueva Cita</h2>
+                            <button id="btnVolverListaCitas" class="btn-volver"><i class="fas fa-arrow-left"></i> Volver a Citas</button>
+                        </div>
+                        <div class="form-card">
+                            <form id="formCita">
+                                <input type="hidden" id="citaId">
+                                <div class="form-group">
+                                    <label><i class="fas fa-user"></i> Cliente:</label>
+                                    <select id="clienteCitaSelect" required><option value="">-- Seleccionar Cliente --</option></select>
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fas fa-paw"></i> Mascota:</label>
+                                    <select id="mascotaCitaSelect" required><option value="">-- Seleccionar Mascota --</option></select>
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fas fa-user-md"></i> Veterinario:</label>
+                                    <select id="veterinarioCitaSelect" required><option value="">-- Seleccionar Veterinario --</option></select>
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fas fa-stethoscope"></i> Servicio:</label>
+                                    <select id="servicioCitaSelect" required>
+                                        <option value="">Seleccionar</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fas fa-dollar-sign"></i> Costo ($):</label>
+                                    <input type="number" id="costoCita" min="0" required value="0">
+                                </div>
+                                <div class="form-grid-2">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-calendar-day"></i> Fecha:</label>
+                                        <input type="date" id="fechaCita" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fas fa-clock"></i> Hora:</label>
+                                        <input type="time" id="horaCita" required min="08:00" max="22:00" step="900">
+                                    </div>
+                                </div>
+                                <div class="form-buttons-full">
+                                    <button type="submit" id="btnGuardarCita" class="btn-main">Guardar Cita</button>
+                                    <button type="button" id="btnCancelarCitaForm" class="btn-cancel">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+                <footer class="footer">
+                    <p>© 2025 CliniPet | Sistema de Gestión Veterinaria</p>
+                </footer>
+            </main>
+        </div>
+        <div id="citaDetailModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:10000; align-items:center; justify-content:center;">
+            <div style="width:90%; max-width:600px; background:#fff; padding:18px; border-radius:8px; position:relative;">
+                <button id="closeDetailBtn" style="position:absolute; right:12px; top:12px; background:#dc3545; color:#fff; border:none; padding:8px 10px; border-radius:6px; cursor:pointer;">Cerrar</button>
+                <div id="detalleContenido" style="margin-top:30px;"></div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+        <script type="module" src="../control/recep.js"></script>
+    </body>
+</html>
